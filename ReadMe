@@ -1,0 +1,45 @@
+Pour créer un plugin sous WordPress, j'ai suivi la démarche suivante :
+
+J'ai créé un dossier avec le nom du plugin (footer) dans le dossier racine/wp-content/plugins.
+J'ai créé un fichier editFooter.php.
+Dans le fichier editFooter.php, j'ai écrit le code suivant en adaptant :
+
+<?php
+/**
+ * @package Edit_Footer
+ * @version 1.0.0
+ */
+/*
+Plugin Name: Edit Footer
+Plugin URI: http://wordpress.org/plugins/edit-footer/
+Description: C'est une extension qui permet d'éditer le footer de votre site
+Author: hiba JOUMAR
+Version: 1.0.0
+*/
+
+- Le plugin est immédiatement disponible dans le backend au niveau des extensions.
+
+* la création des actions : 
+add_action('init', function () {
+    register_post_type('footer', [
+        'label' => 'Footer',
+        'public' => true,
+        'menu_position' => 3,
+        'menu_icon' => 'dashicons-feedback',
+        'supports' => ['title', 'editor', 'thumbnail'],
+        'show_in_rest' => true,
+        'has_archive' => true,
+    ]);
+});
+
+* Les shortcodes :  comprend la fonction appelée et la déclaration du shortcode.
+ => add_shortcode('example_footer', 'example_footer_plugin');
+ example_footer_plugin : on ajoute un code avec des balises HTML qui va nous permet de créer un footer.
+ 
+ * Les hooks :  
+ - La commande suivante utilise le hook register_activation_hook qui est appelé au moment de l’activation du plugin.
+ - Pour la désactivation et la désinstallation du plugin, on utilise register_deactivation_hook
+ 
+ * désinstaller le plugin
+ J'ai créé un uninstall.php fichier dans le dossier racine du plugin. Ce fichier magique est exécuté automatiquement lorsque les utilisateurs suppriment le plugin.
+ 
